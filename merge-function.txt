@@ -1,0 +1,5 @@
+## NB: (In C:- the one that is later in the argument sequence takes precedence = Z)
+
+merge({a="b", c="d"}, {e="f", c="z"})
+
+merge({a="b"}, {a=[1,2], c="z"}, {d=3})

@@ -1,0 +1,5 @@
+upper("tamie")
+
+upper("hello world")
+
+upper("elite-dev-general-resource")

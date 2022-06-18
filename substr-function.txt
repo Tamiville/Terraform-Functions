@@ -1,0 +1,5 @@
+substr("hello world", 1, 4)
+
+substr("hello world", 1, 9)
+
+substr("hello world", 0, 7)

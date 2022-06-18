@@ -1,0 +1,5 @@
+format("Hello, %s!", "Ander")
+
+format("Hello, %sson", "Ander")
+
+format("Hello, %sless", "fear")

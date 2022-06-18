@@ -1,0 +1,3 @@
+split(seperator, string)   : seperator is ,
+
+split(",", "foo,bar,baz")

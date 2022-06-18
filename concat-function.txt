@@ -1,0 +1,5 @@
+concat(["a", ""], ["b", "c"])
+
+concat(["a"], ["b", "c"])
+
+concat(["private-subnet-server", "public-subnet-server"], ["tamie", "louis"])

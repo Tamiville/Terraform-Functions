@@ -1,0 +1,5 @@
+length(["tamie", "louis", "jerry"])
+
+length(["tamie", "louis"])
+
+length(["tamie", "louis", "jerry", "sam", "arrey", "lewis"])

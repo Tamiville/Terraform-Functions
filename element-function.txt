@@ -1,0 +1,4 @@
+element(["a", "b", "c"], 1)
+element(["a", "b", "c"], 0)
+element(["tamie", "louis", "jerry"], 0)
+element(["tamie", "louis", "jerry"], 2)

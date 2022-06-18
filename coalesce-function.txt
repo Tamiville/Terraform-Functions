@@ -1,0 +1,5 @@
+coalesce("a", "b")
+
+coalesce("tamie", "bye")
+
+coalesce("tamie", "arrey", "louis")
