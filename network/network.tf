@@ -1,48 +1,45 @@
 resource "azurerm_resource_group" "clax_general_network" {
-  name     = "clax_general_network"
-  location = "centralus"
+  name     = var.clax_general_network
+  location = var.location
 }
 
 resource "azurerm_network_security_group" "clax_nsg" {
-  name                = "clax_nsg"
+  name                = var.clax_nsg
   location            = azurerm_resource_group.clax_general_network.location
   resource_group_name = azurerm_resource_group.clax_general_network.name
 }
 
 resource "azurerm_virtual_network" "clax_vnet" {
-  name                = "clax_vnet"
+  name                = var.clax_vnet
   location            = azurerm_resource_group.clax_general_network.location
   resource_group_name = azurerm_resource_group.clax_general_network.name
-  address_space       = ["10.0.0.0/16"]
-  dns_servers         = ["10.0.0.4", "10.0.0.5"]
+  address_space       = var.address_space
+  dns_servers         = var.dns_servers
 
 
-  tags = {
-    environment = "Development"
-    company     = "elitesolutionsit"
-    ManagedWith = "terraform"
-  }
+  tags = local.common_tags
 }
+
 resource "azurerm_route_table" "clax_rt" {
-  name                          = "clax_rt"
+  name                          = var.clax_rt
   location                      = azurerm_resource_group.clax_general_network.location
   resource_group_name           = azurerm_resource_group.clax_general_network.name
   disable_bgp_route_propagation = false
 }
 
 resource "azurerm_subnet" "database_subnet" {
-  name                 = "database_subnet"
+  name                 = var.database_subnet
   resource_group_name  = azurerm_resource_group.clax_general_network.name
   virtual_network_name = azurerm_virtual_network.clax_vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = var.address_prefixes_database
 }
 
 
 resource "azurerm_subnet" "application_subnet" {
-  name                 = "application_subnet"
+  name                 = var.application_subnet
   resource_group_name  = azurerm_resource_group.clax_general_network.name
   virtual_network_name = azurerm_virtual_network.clax_vnet.name
-  address_prefixes     = ["10.0.2.0/24"]
+  address_prefixes     = var.address_prefixes_application
 }
 
 resource "azurerm_subnet_route_table_association" "claxdev_rt_assoc_database" {
@@ -73,8 +70,8 @@ resource "azurerm_network_security_rule" "nsg_RDP_rule" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3389"
-  source_address_prefix       = "82.76.59.177/32"
-  destination_address_prefix  = "VirtualNetwork"
+  source_address_prefix       = var.source_address_prefix
+  destination_address_prefix  = var.destination_address_prefix
   resource_group_name         = azurerm_resource_group.clax_general_network.name
   network_security_group_name = azurerm_network_security_group.clax_nsg.name
 }

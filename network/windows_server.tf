@@ -22,19 +22,15 @@ resource "azurerm_public_ip" "claxdev_pip" {
   resource_group_name = azurerm_resource_group.clax_general_resources.name
   allocation_method   = "Static"
 
-  tags = {
-    environment = "Development"
-    company     = "elitesolutionsit"
-    ManagedWith = "terraform"
-  }
+  tags = local.common_tags
 }
 
 resource "azurerm_windows_virtual_machine" "windows_server" {
-  name                = "windows-server"
+  name                = join("-", ["windows", "server"])
   location            = azurerm_resource_group.clax_general_resources.location
   resource_group_name = azurerm_resource_group.clax_general_resources.name
   size                = "Standard_DS1"
-  admin_username      = "adminuser"
+  admin_username      = "claxadminuser"
   admin_password      = "P@$$w0rd1234!"
   network_interface_ids = [
     azurerm_network_interface.claxdev_nic.id,
