@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "clax_general_network" {
   name     = "clax_general_network"
-  location = "EASTUS"
+  location = "centralus"
 }
 
 resource "azurerm_network_security_group" "clax_nsg" {
@@ -16,7 +16,7 @@ resource "azurerm_virtual_network" "clax_vnet" {
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
-  
+
   tags = {
     environment = "Development"
     company     = "elitesolutionsit"
@@ -35,31 +35,14 @@ resource "azurerm_subnet" "database_subnet" {
   resource_group_name  = azurerm_resource_group.clax_general_network.name
   virtual_network_name = azurerm_virtual_network.clax_vnet.name
   address_prefixes     = ["10.0.1.0/24"]
-
-  delegation {
-    name = "delegation"
-
-    service_delegation {
-      name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
-    }
-  }
 }
+
 
 resource "azurerm_subnet" "application_subnet" {
   name                 = "application_subnet"
   resource_group_name  = azurerm_resource_group.clax_general_network.name
   virtual_network_name = azurerm_virtual_network.clax_vnet.name
   address_prefixes     = ["10.0.2.0/24"]
-
-  delegation {
-    name = "delegation"
-
-    service_delegation {
-      name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
-    }
-  }
 }
 
 resource "azurerm_subnet_route_table_association" "claxdev_rt_assoc_database" {
@@ -80,4 +63,18 @@ resource "azurerm_subnet_network_security_group_association" "claxdev_nsg_assoc_
 resource "azurerm_subnet_network_security_group_association" "claxdev_nsg_assoc_application_subnet" {
   subnet_id                 = azurerm_subnet.application_subnet.id
   network_security_group_id = azurerm_network_security_group.clax_nsg.id
+}
+
+resource "azurerm_network_security_rule" "nsg_RDP_rule" {
+  name                        = "nsg_RDP_rule"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefix       = "82.76.59.177/32"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = azurerm_resource_group.clax_general_network.name
+  network_security_group_name = azurerm_network_security_group.clax_nsg.name
 }
