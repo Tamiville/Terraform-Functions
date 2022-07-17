@@ -18,7 +18,7 @@ data "azurerm_key_vault" "existing" {
   resource_group_name = "claxvault"
 }
 
-data "azurerm_network_security_group" "nsg" {
-  name                = local.existingnsg
+data "azurerm_network_security_group" "clax_nsg" {
+  name                = "clax_nsg"
   resource_group_name = local.existingvnetrg
 }
