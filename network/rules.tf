@@ -96,6 +96,7 @@ resource "azurerm_network_security_rule" "All-Traffic-Outbound" {
   network_security_group_name = azurerm_network_security_group.clax_nsg.name
 }
 
+
 resource "azurerm_network_security_rule" "All-Traffic-Inbound" {
   name                        = "All-Traffic-Intbound"
   priority                    = 108
@@ -109,3 +110,4 @@ resource "azurerm_network_security_rule" "All-Traffic-Inbound" {
   resource_group_name         = azurerm_resource_group.clax_general_network.name
   network_security_group_name = azurerm_network_security_group.clax_nsg.name
 }
+
