@@ -23,6 +23,11 @@ variable "address_space" {
   default = ["10.0.0.0/16"]
 }
 
+variable "dns_servers" {
+  type    = list(string)
+  default = ["10.0.0.4", "10.0.0.5"]
+}
+
 variable "clax_rt" {
   type    = string
   default = "clax_rt"
@@ -56,14 +61,4 @@ variable "destination_address_prefix" {
 variable "source_address_prefix" {
   type    = string
   default = "82.76.59.177/32"
-}
-
-variable "source_address_prefix_appgw" {
-  type    = string
-  default = "GatewayManager"
-}
-
-variable "destination_address_prefix_appgw" {
-  type    = string
-  default = "*"
 }

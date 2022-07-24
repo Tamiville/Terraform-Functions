@@ -7,9 +7,11 @@ locals {
     company     = "elitesolutionsit"
     ManagedWith = "terraform"
   }
-  server         = "clax"
-  buildregion    = "centralus"
-  existingvnet   = "clax_vnet"
-  existingvnetrg = "clax_general_network"
-  existingnsg    = "clax_nsg"
+  server            = "clax"
+  buildregion       = "centralus"
+  existingvnet      = "clax_vnet"
+  existingvnetrg    = "clax_general_network"
+  existingnsg       = "clax_nsg"
+  existinglinuxvm   = "clax-linux-vm"
+  existinglinuxvmrg = "clax_general_resources"
 }

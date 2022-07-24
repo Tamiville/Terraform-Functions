@@ -7,11 +7,4 @@ locals {
     company     = "elitesolutionsit"
     ManagedWith = "terraform"
   }
-
-  rgappgw        = "clax"
-  buildregion    = "centralus"
-  existingvnet   = "clax_vnet"
-  existingvnetrg = "clax_general_network"
-  existingnsg    = "clax_nsg"
-  existingrtb    = "clax_rt"
 }

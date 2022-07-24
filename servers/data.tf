@@ -2,6 +2,8 @@ data "azurerm_client_config" "current" {}
 
 data "azurerm_subscription" "primary" {}
 
+data "azuread_client_config" "current" {}
+
 data "azurerm_subnet" "backendnetwork" {
   name                 = "application_subnet"
   virtual_network_name = local.existingvnet
@@ -19,6 +21,11 @@ data "azurerm_key_vault" "existing" {
 }
 
 data "azurerm_network_security_group" "clax_nsg" {
-  name                = "clax_nsg"
+  name                = local.existingnsg
   resource_group_name = local.existingvnetrg
+}
+
+data "azurerm_virtual_machine" "existinglinuxvm" {
+  name                = local.existinglinuxvm
+  resource_group_name = local.existinglinuxvmrg
 }
